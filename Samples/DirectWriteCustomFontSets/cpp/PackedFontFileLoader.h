@@ -14,7 +14,6 @@
 
 #include "stdafx.h"
 #include "CustomFontSetManager.h"
-#include "StaticFontFileStream.h"
 
 
 

@@ -22,11 +22,7 @@ namespace DWriteCustomFontSets
     enum class Scenario // Enum used for control of which user-selected scenario is executed.
     {
         Undefined, // Set by default -- scenario is not specified or recognized.
-        UnknownFontsInLocalFolder,
-        KnownFontsInAppPackageFolder,
-        KnownRemoteFonts,
         InMemoryFonts,
-        PackedFonts
     };
 
     // Methods used by the app for displaying results after a font set has been created.

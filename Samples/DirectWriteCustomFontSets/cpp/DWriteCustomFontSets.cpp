@@ -39,48 +39,6 @@ int wmain(int argc, wchar_t* argv[])
     CustomFontSetManager fontSetManager = CustomFontSetManager();
     switch (scenario)
     {
-    case DWriteCustomFontSets::Scenario::UnknownFontsInLocalFolder:
-    {
-        // For this scenario, we'll use the font files in the Fonts subfolder at the app's install path,
-        // but this would work for font files in any local folder. The implementation doesn't make any
-        // assumptions about what the fonts are.
-
-        std::wcout << L"Scenario 1: custom font set using font files in a local file folder.\n";
-
-        // Get a vector of file paths for files in the app's Fonts subfolder.
-        std::vector<std::wstring> selectedFilePaths;
-        if (!DWriteCustomFontSets::GetFilesPathsInAppFontsFolder(selectedFilePaths))
-        {
-            std::wcout << L"\nError: there was a problem getting the font file paths, so quitting.\n";
-            return -1;
-        }
-
-        // Create a font set using the local font file paths.
-        fontSetManager.CreateFontSetUsingLocalFontFiles(selectedFilePaths);
-
-        break;
-    } // end case UnknownFontsInLocalFolder
-
-    case DWriteCustomFontSets::Scenario::KnownFontsInAppPackageFolder:
-        // For this scenario, the method we'll call to create the font set will handle details
-        // regarding the app fonts, including assigning custom name properties.
-        std::wcout << L"Scenario 2: custom font set using known fonts bundled in the app.\n";
-        fontSetManager.CreateFontSetUsingKnownAppFonts();
-        break;
-
-    case DWriteCustomFontSets::Scenario::KnownRemoteFonts:
-        // For this scenario, the method to create the font set will use a set of known fonts
-        // in the cloud. It assigns custom properties so that the font set can be created without
-        // needing to download any font data first. Later, we'll show how to interact with APIs
-        // to handle downloading of remote fonts.
-        std::wcout << L"Scenario 3: custom font set using remote fonts from the Web.\n";
-        if (!fontSetManager.IDWriteFactory5_IsAvailable())
-        {
-            std::wcout << L"This scenario requires Windows 10 Creators Update (preview build 15021 or later).\n";
-            return -1;
-        }
-        fontSetManager.CreateFontSetUsingKnownRemoteFonts();
-        break;
 
     case DWriteCustomFontSets::Scenario::InMemoryFonts:
         // For this scenario, the method to create the font set will simulate a document containing
@@ -97,18 +55,6 @@ int wmain(int argc, wchar_t* argv[])
             return -1;
         }
         fontSetManager.CreateFontSetUsingInMemoryFontData();
-        break;
-
-    case DWriteCustomFontSets::Scenario::PackedFonts:
-        // For this scenario, the font data is in a packed, WOFF2 container format, and the method
-        // used to create the font set will use DirectWrite APIs to unpack the data.
-        std::wcout << L"Scenario 5: custom font set using packed, WOFF2 font data.\n";
-        if (!fontSetManager.IDWriteFactory5_IsAvailable())
-        {
-            std::wcout << L"This scenario requires Windows 10 Creators Update (preview build 15021 or later).\n";
-            return -1;
-        }
-        fontSetManager.CreateFontSetUsingPackedFontData();
         break;
 
     default:

@@ -88,12 +88,8 @@ namespace DWriteCustomFontSets
 
     // Map used to map scenario IDs in the command line to an enum.
     std::map<std::wstring, Scenario> ScenarioMap =
-    {
-        { L"1", Scenario::UnknownFontsInLocalFolder },
-        { L"2", Scenario::KnownFontsInAppPackageFolder },
-        { L"3", Scenario::KnownRemoteFonts },
+    {        
         { L"4", Scenario::InMemoryFonts },
-        { L"5", Scenario::PackedFonts}
     };
 
 

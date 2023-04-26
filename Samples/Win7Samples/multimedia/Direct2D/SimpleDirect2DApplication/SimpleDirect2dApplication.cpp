@@ -319,8 +319,9 @@ HRESULT DemoApp::CreateDeviceResources()
             hr = LoadBitmapFromFile(
                 m_pRenderTarget,
                 m_pWICFactory,
-                L".\\sampleImage.jpg",
-                100,
+                //L".\\sampleImage.jpg",
+                L".\\splashscreen_0.png",
+                256,
                 0,
                 &m_pAnotherBitmap
                 );

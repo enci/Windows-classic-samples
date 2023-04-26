@@ -60,11 +60,7 @@ namespace DWriteCustomFontSets
         bool IDWriteFactory5_IsAvailable();
 
         // Methods for creating font sets under the different scenarios.
-        void CreateFontSetUsingLocalFontFiles(const std::vector<std::wstring>& selectedFilePathNames);
-        void CreateFontSetUsingKnownAppFonts();
-        void CreateFontSetUsingKnownRemoteFonts();
         void CreateFontSetUsingInMemoryFontData();
-        void CreateFontSetUsingPackedFontData();
 
         // Methods for obtaining information about the fonts in the font set.
         uint32_t                                GetFontCount() const;
@@ -86,9 +82,7 @@ namespace DWriteCustomFontSets
         // need to access the font data. File file loaders must be registered with a DirectWrite
         // factory object, and must also be unregistered before this class goes out of scope. This
         // will be done in the CustomFontSetManager destructor.
-        Microsoft::WRL::ComPtr<IDWriteRemoteFontFileLoader>     m_remoteFontFileLoader; // Holds a system-implemented IDWriteRemoteFontFileLoader.
         Microsoft::WRL::ComPtr<IDWriteInMemoryFontFileLoader>   m_inMemoryFontFileLoader; // Holds a system-implemented IDWriteInMemoryFontFileLoader.
-        Microsoft::WRL::ComPtr<IDWriteFontFileLoader>           m_packedFontFileLoader; // Holds a custom IDWriteFontFileLoader implementation.
 
     }; // class CustomFontSetManager
 
