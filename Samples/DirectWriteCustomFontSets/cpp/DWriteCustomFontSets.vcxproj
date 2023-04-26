@@ -147,8 +147,6 @@
     <ClInclude Include="DWriteCustomFontSets.h" />
     <ClInclude Include="DXHelper.h" />
     <ClInclude Include="FileHelper.h" />
-    <ClInclude Include="FontDownloadListener.h" />
-    <ClInclude Include="PackedFontFileLoader.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -159,8 +157,6 @@
     <ClCompile Include="Document.cpp" />
     <ClCompile Include="DWriteCustomFontSets.cpp" />
     <ClCompile Include="FileHelper.cpp" />
-    <ClCompile Include="FontDownloadListener.cpp" />
-    <ClCompile Include="PackedFontFileLoader.cpp" />
     <ClCompile Include="Statics.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

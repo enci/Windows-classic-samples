@@ -39,13 +39,7 @@
     <ClInclude Include="FileHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FontDownloadListener.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Document.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PackedFontFileLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BinaryResources.h">
@@ -71,13 +65,7 @@
     <ClCompile Include="Statics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FontDownloadListener.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Document.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PackedFontFileLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BinaryResources.cpp">

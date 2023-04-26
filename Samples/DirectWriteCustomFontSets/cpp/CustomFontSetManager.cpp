@@ -14,9 +14,6 @@
 #include "BinaryResources.h" // Used in CreateFontSetUsingInMemoryFontData() for loading font data embedded in the app binary.
 #include "CustomFontSetManager.h"
 #include "Document.h" // Used in CreateFontSetUsingInMemoryFontData() to simulate a document with embedded font data.
-#include "FileHelper.h"
-#include "FontDownloadListener.h" // Used in GetFontDataDetails() when there are remote fonts (scenario 3)
-#include "PackedFontFileLoader.h" // Used in CreateFontSetUsingPackedFontData() for a custom font file loader that handles packed font container formats.
 
 
 using Microsoft::WRL::ComPtr;
@@ -282,57 +279,6 @@ namespace DWriteCustomFontSets
             );
         } // end for loop
 
-          // Check the font download queue to see if we have remote fonts to download.
-        ComPtr<IDWriteFontDownloadQueue> fontDownloadQueue;
-        DX::ThrowIfFailed(
-            m_dwriteFactory3->GetFontDownloadQueue(&fontDownloadQueue)
-        );
-        if (!fontDownloadQueue->IsEmpty())
-        {
-            // We need a download listener. It will set an event when the download task is 
-            // completed; we need to get the event handle and wait on it after initiating
-            // the download.
-            ComPtr<FontDownloadListener> fontDownloadListener = new FontDownloadListener();
-            HANDLE downloadCompletedHandle = fontDownloadListener->GetDownloadCompletedEventHandle();
-
-            // Now begin the download, and then wait on our primary or alternate event.
-            DX::ThrowIfFailed(
-                fontDownloadQueue->BeginDownload(fontDownloadListener.Get())
-            );
-            const HANDLE handles[] = { downloadCompletedHandle, cancellationHandle };
-            DWORD waitResult = WaitForMultipleObjects(ARRAYSIZE(handles), handles, FALSE, 15000);
-
-            // Check the wait result. If the alternate event fired, the user wants to exit early
-            // so just return the empty result vector. If download success, we'll build up results
-            // using the font data.
-            switch (waitResult)
-            {
-            case WAIT_OBJECT_0:
-                // DownloadCompleted was called on our listener; check for errors.
-                if (fontDownloadListener->GetDownloadResult() != S_OK)
-                {
-                    // Download failed for some reason; return empty result vector.
-                    OutputDebugString(L"\nUnexpected error within GetFontDataDetails: downloading of fonts was initiated, but failed.\n\n");
-                    return resultVector;
-                }
-                // Download succeeded; break out of switch.
-                break;
-
-                // Remaining cases are all failure/abort, so just return empty result vector.
-
-            case WAIT_OBJECT_0 + 1: // User interrupted flow.
-                std::wcout << L"You've aborted the process of getting font details.\n";
-                return resultVector;
-
-            case WAIT_TIMEOUT:
-                std::wcout << L"Downloading of fonts was initiated, but has timed out.\n";
-                return resultVector;
-
-            default: // Shouldn't ever go here.
-                return resultVector;
-
-            } // end switch
-        } // end if (!fontDownloadQueue->IsEmpty())
 
         // Get representative data for each font: list the full name to identify the font (this will come directly 
         // from the font data, not from any custom font set properties), and give the font's x-height.
