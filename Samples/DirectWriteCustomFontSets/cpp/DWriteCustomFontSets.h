@@ -28,8 +28,4 @@ namespace DWriteCustomFontSets
     // Methods used by the app for displaying results after a font set has been created.
     void ReportFontProperties(const CustomFontSetManager& fontSetManager);
     void ReportFontDataDetails(const CustomFontSetManager& fontSetManager);
-
-    // Other helper methods used in wmain.
-    _Success_(return) bool GetFilesPathsInAppFontsFolder(_Out_ std::vector<std::wstring>& selectedFilePathNames);
-
 } // namespace DWriteCustomFontSets

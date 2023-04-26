@@ -15,7 +15,6 @@
 #include "stdafx.h"
 #include "DWriteCustomFontSets.h"
 #include "CommandLineArgs.h"
-#include "FileHelper.h"
 
 
 using namespace DWriteCustomFontSets;
@@ -155,42 +154,3 @@ void DWriteCustomFontSets::ReportFontDataDetails(const CustomFontSetManager& fon
     return;
 } // end ReportFontDataDetails()
 
-
-
-
-// ****************************************************
-//
-//    Other helper methods
-//
-// ****************************************************
-
-_Success_(return) bool DWriteCustomFontSets::GetFilesPathsInAppFontsFolder(_Out_ std::vector<std::wstring>& selectedFilePaths)
-{
-    // Creates a vector with path names to all files in the Fonts subfolder under the app's install
-    // folder. This is representative of font files at arbitrary paths in local storage. Returns false 
-    // if there was an error.
-
-    // Get the application path and a Fonts subfolder:
-    std::wstring applicationPath;
-    if (!FileHelper::GetApplicationPath(applicationPath))
-    {
-        return false;
-    }
-    std::wstring fontFolderPath(applicationPath + L"Fonts");
-
-    // Confirm it exists.
-    if (!FileHelper::PathExists(fontFolderPath))
-    {
-        std::wstring debugString(L"\nThe folder " + fontFolderPath + L" doesn't exist. Copy the Fonts folder and its contents from the project into the folder where there built .exe is located.\n\n");
-        OutputDebugString(debugString.c_str());
-        return false;
-    }
-
-    // Get the vector of files in the folder.
-    if (!FileHelper::GetFilesInSelectedFolder(fontFolderPath, selectedFilePaths))
-    {
-        return false;
-    }
-
-    return true;
-} // end GetFilesPathsInAppFontsFolder()
